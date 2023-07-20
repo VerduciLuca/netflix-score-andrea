@@ -1,0 +1,94 @@
+body{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    flex-direction: column;
+
+}
+
+button{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    color: brown;
+    font-size: 80px;
+}
+
+#show-container{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+span{
+    margin: 0px,4px;
+    font-weight: bold;
+}
+
+.list-element{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: brown;
+    border-radius: 18px;
+    padding: 18px;
+    justify-content: center;
+    align-items: center;
+    min-width: 130px;
+}
+
+button:active{
+    background-color: rgb(148, 38, 38);
+    border-radius: 18px;
+}
+
+#btn-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px
+}
+
+#btn-div button{
+    background-color: brown;
+    padding: 8px;
+    border-radius: 8px;
+
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+}
+
+#link-div{
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+#link-div a{
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+#link-div a:hover{
+    color: brown;
+    text-decoration: underline;
+}
