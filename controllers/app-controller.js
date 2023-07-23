@@ -41,6 +41,12 @@ class AppController {
         </footer>
         `;
 
+        const newShowButton = document.createElement('button');
+        newShowButton.appendChild(document.createTextNode('Nuova serie'));
+        newShowButton.addEventListener('click', () => this.openDialog());
+        appContainer.appendChild(newShowButton);
+
+
 
     }   
 
@@ -88,6 +94,8 @@ class AppController {
             downButton.appendChild(document.createTextNode('👎'))
             downButton.addEventListener('click',()=>this.downvoteShow(show))
             listElement.appendChild(downButton)
+            
+
 
             showsContainer.appendChild(listElement)
             
@@ -96,13 +104,16 @@ class AppController {
 
     upvoteShow(show){
         DBService.upvote(show).then(show=>{
+            this.sortByUpvotes();
             this.renderShows();
+            
         })
     }
 
     downvoteShow(show){
         DBService.downvote(show).then(show=>{
-            this.renderShows()
+            this.sortByDownvotes()
+            this.renderShows();
         })
     }
 
@@ -115,5 +126,74 @@ class AppController {
         this.shows.sort((s1,s2) => s1.downvotes - s2.downvotes);
         this.renderShows()
     }
+
+    openDialog() {
+        const dialogContainer = document.createElement('div');
+        dialogContainer.id = 'dialog-container';
+        dialogContainer.innerHTML = `
+            <div id="dialog-content">
+                <button id="close-btn" onclick="appController.closeDialog()">X</button>
+                <h2>Inserisci un nuovo show</h2>
+                <form id="create-form" name="create" onsubmit="appController.sendData(event)">
+                    <div>
+                    <label for="title">Inserisci il titolo</label>
+                    <input type="text" name="title" id="title">
+                </div>
+                <div>
+                    <label for="author">Inserisci l'autore</label>
+                    <input type="text" name="author" id="author">
+                </div>
+                <div>
+                    <label for="imageUrl">Inserisci il link all'immagine</label>
+                    <input type="text" name="imageUrl" id="imageUrl">
+                </div>
+                <div>
+                    <label for="isOver">È conclusa?</label>
+                    <input type="checkbox" name="isOver" id="isOver">
+                </div>
+                <input style="visibility: hidden;" type="number" name="upvotes" id="upvotes" value="0">
+                <input style="visibility: hidden;" type="number" name="downvotes" id="downvotes" value="0">
+                <button type="submit">Invia</button>
+                </form>
+            </div>
+        `
+        ;
+        document.body.appendChild(dialogContainer);
+
+        const closeBtn = document.getElementById('close-btn')
+        this.closeBtn.addEventListener('click', () => this.closeDialog()) 
+    }
+
+    closeDialog() {
+        const dialogContainer = document.getElementById('dialog-container');
+        if (dialogContainer) {
+            dialogContainer.remove();
+            this.render()
+        }
+    }
+
+    sendData(event){
+        event.preventDefault();
+    
+        const form = document.forms['create'];
+        const title = form ['title'].value;
+        const formData = new FormData(form)
+    
+        let isOverBool = formData.get('isOver') === 'on'? true : false
+    
+        const newShow = {
+            title: formData.get('title'),
+            author: formData.get('author'),
+            imageUrl: formData.get('imageUrl'),
+            isOver: isOverBool,
+            upvotes:0,
+            downvotes:0,
+        }
+    
+        this.shows.push(newShow)
+        this.closeDialog()
+        this.renderShows()
+    }
+
 
 }

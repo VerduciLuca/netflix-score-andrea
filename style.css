@@ -86,9 +86,23 @@ header{
     color: white;
     text-transform: uppercase;
     text-decoration: none;
+
 }
 
 #link-div a:hover{
     color: brown;
     text-decoration: underline;
+}
+
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dialog-container{
+    background-color: brown;
+    padding: 18px;
+    border-radius: 18px;
+    gap: 8px
 }
